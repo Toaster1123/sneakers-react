@@ -1,16 +1,19 @@
 import React from 'react';
 import axios from 'axios';
+import { useClickAway } from 'react-use';
 
 import { Info } from '../info';
 import { useCart } from '../../hooks/useCart';
 
 import styles from './drawer.module.scss';
 
-function Drawer({ onRemove, onClose, opened, items = [] }) {
+function Drawer({ onRemove, onClose, opened, items = [], setCartOpened }) {
   const { cartItems, setCartItems, totalPrice } = useCart();
   const [orderId, setOrderId] = React.useState(null);
   const [isOrderCompleted, setIsOrderCompleted] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
+  const ref = React.useRef(null);
+
   const onClickOrder = async () => {
     try {
       const { data } = await axios.post('https://6ca41a0c78299893.mokky.dev/Orders', {
@@ -29,11 +32,14 @@ function Drawer({ onRemove, onClose, opened, items = [] }) {
     }
     setIsLoading(false);
   };
+  useClickAway(ref, () => {
+    setCartOpened(false);
+  });
   return (
     <div className={`${styles.overlay} ${opened ? styles.overlayVisible : ``}`}>
-      <div className={styles.drawer}>
+      <div ref={ref} className={styles.drawer}>
         <h2>
-          Корзина <img src="/pic/btn-remove.svg" onClick={onClose} />
+          Корзина <img src="pic/btn-remove.svg" onClick={onClose} />
         </h2>
         {items.length > 0 ? (
           <div className={styles.drawerItems}>
@@ -47,7 +53,7 @@ function Drawer({ onRemove, onClose, opened, items = [] }) {
                     <p>{obj.title}</p>
                     <b>{obj.price}</b>
                   </div>
-                  <img onClick={() => onRemove(obj.id)} src="/pic/btn-remove.svg" />
+                  <img onClick={() => onRemove(obj.id)} src="pic/btn-remove.svg" />
                 </div>
               ))}
             </div>
@@ -65,13 +71,13 @@ function Drawer({ onRemove, onClose, opened, items = [] }) {
                 </li>
               </ul>
               <button disabled={isLoading} onClick={onClickOrder} className="greenButton">
-                Оформить заказ <img src="/pic/arrow.svg" />
+                Оформить заказ <img src="pic/arrow.svg" />
               </button>
             </div>
           </div>
         ) : (
           <Info
-            img={isOrderCompleted ? '/pic/complete-order.jpg' : '/pic/empty-cart.jpg'}
+            img={isOrderCompleted ? 'pic/complete-order.jpg' : 'pic/empty-cart.jpg'}
             title={isOrderCompleted ? 'Заказ оформлен' : 'Корзина пустая'}
             description={
               isOrderCompleted

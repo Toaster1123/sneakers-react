@@ -2,6 +2,7 @@ import React from 'react';
 import ContentLoader from 'react-content-loader';
 import styles from './Card.module.scss';
 import { AppContext } from '../../context';
+import { Link } from 'react-router-dom';
 
 function Card({
   onFavorite,
@@ -42,14 +43,16 @@ function Card({
       ) : (
         <>
           <div className={styles.favorite}>
-            {favorited && (
+            {onFavorite && (
               <img
-                src={isFavorite ? '/pic/liked.svg' : '/pic/unliked.svg'}
+                src={isFavorite ? 'pic/liked.svg' : 'pic/unliked.svg'}
                 onClick={onClickFavorite}
               />
             )}
           </div>
-          <img src={imageUrl} height={127} width="100%" />
+          <Link to={`/product/${id}`}>
+            <img src={imageUrl} height={127} width="100%" />
+          </Link>
           <h5>{title}</h5>
           <div className={styles.cardBottom}>
             <div className={styles.cardContent}>
@@ -60,7 +63,7 @@ function Card({
               <img
                 className={styles.plus}
                 onClick={handlePlus}
-                src={isItemAdded(id) ? '/pic/btn-checked.svg' : '/pic/btn-plus.svg'}
+                src={isItemAdded(id) ? 'pic/btn-checked.svg' : 'pic/btn-plus.svg'}
               />
             )}
           </div>

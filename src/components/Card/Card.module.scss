@@ -1,4 +1,8 @@
 .card {
+  user-select: none;
+  img {
+    cursor: pointer;
+  }
   .plus {
     cursor: pointer;
   }

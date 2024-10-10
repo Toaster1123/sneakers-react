@@ -1,7 +1,6 @@
 import Card from '../components/Card';
 import React from 'react';
 import { AppContext } from '../context';
-
 function Home({
   items,
   favorites,
@@ -12,6 +11,7 @@ function Home({
   onAddToCart,
   isLoading,
 }) {
+  const { page, setPage } = React.useContext(AppContext);
   const renderItems = () => {
     const filtredItems = items.filter((obj) =>
       obj.title.toLowerCase().includes(searchValue.toLowerCase()),
@@ -26,6 +26,10 @@ function Home({
         {...item}
       />
     ));
+  };
+  const onChangePage = (id) => {
+    setPage(id);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
   return (
     <div className="content">
@@ -43,12 +47,26 @@ function Home({
             <img
               onClick={() => setSearchValue('')}
               className="removeInput"
-              src="/pic/btn-remove.svg"
+              src="pic/btn-remove.svg"
             />
           )}
         </div>
       </div>
       <div className="snaekers">{renderItems()}</div>
+      <div className="pagination">
+        {[...Array(3)].map((_, id) => {
+          return (
+            <li
+              onClick={() => {
+                onChangePage(id + 1);
+              }}
+              key={id}
+              className={page == id + 1 ? 'currentPage' : ''}>
+              {id + 1}
+            </li>
+          );
+        })}
+      </div>
     </div>
   );
 }

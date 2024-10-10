@@ -8,7 +8,7 @@ function Header(props) {
     <header>
       <div className="headerLeft">
         <Link to="/">
-          <img src="/pic/logo.png" alt="logo" height={40} width={40} />
+          <img src="/pic/lev-logo.jpg" alt="logo" height={40} width={40} />
         </Link>
         <div className="header_left_name">
           <h3>React sneakers</h3>
@@ -27,7 +27,7 @@ function Header(props) {
         </li>
         <li>
           <Link to="/orders">
-            <img src="/pic/user.svg" height={20} width={20} />
+            <img src="pic/user.svg" height={20} width={20} />
           </Link>
         </li>
       </ul>

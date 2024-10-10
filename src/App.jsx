@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import Favorites from './pages/Favorites';
 import { AppContext } from './context';
 import Orders from './pages/orders';
+import { ItemInfo } from './pages/itemInfo';
 
 function App() {
   const [items, setItems] = React.useState([]);
@@ -15,6 +16,8 @@ function App() {
   const [searchValue, setSearchValue] = React.useState('');
   const [cartOpened, setCartOpened] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
+  const [page, setPage] = React.useState(1);
+
   //запрос к АПИ
   React.useEffect(() => {
     async function fetchData() {
@@ -22,20 +25,20 @@ function App() {
         const [cartResponse, favoritesResponse, itemsResponse] = await Promise.all([
           axios.get('https://6ca41a0c78299893.mokky.dev/cart'),
           axios.get('https://6ca41a0c78299893.mokky.dev/Favorite'),
-          axios.get('https://6ca41a0c78299893.mokky.dev/Items'),
+          axios.get(`https://6ca41a0c78299893.mokky.dev/Items?page=${page}&limit=12`),
         ]);
         setIsLoading(false);
-
         setCartItems(cartResponse.data);
         setFavorites(favoritesResponse.data);
-        setItems(itemsResponse.data);
+        setItems(itemsResponse.data.items);
       } catch (error) {
         console.log(error);
       }
     }
 
     fetchData();
-  }, []);
+  }, [page]);
+
   //Добавление и удаление товара из корзины при нажатии на плюс
   const onAddToCart = async (obj) => {
     try {
@@ -59,10 +62,8 @@ function App() {
   };
   //добавить и удалить из избранного
   const onAddToFavorite = async (obj) => {
-    console.log('obj', obj);
     try {
       if (favorites.find((favObj) => Number(favObj.item_id) === Number(obj.id))) {
-        console.log('delete');
         favorites.forEach((favItem) => {
           if (Number(favItem.item_id === Number(obj.id))) {
             const id = favItem.id;
@@ -71,8 +72,6 @@ function App() {
           }
         });
       } else {
-        console.log('add');
-
         obj.item_id = obj.id;
         delete obj.id;
         const { data } = await axios.post('https://6ca41a0c78299893.mokky.dev/Favorite', obj);
@@ -105,9 +104,26 @@ function App() {
   const onChangeSearchinput = (event) => {
     setSearchValue(event.target.value);
   };
+  //проверка при моунте
   const isItemAdded = (id) => {
     return cartItems.some((cartItm) => cartItm.item_id === id);
   };
+  const onOpenCart = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setCartOpened(true);
+  };
+
+  React.useEffect(() => {
+    if (cartOpened) {
+      document.body.classList.add('isCartOpened');
+    } else {
+      document.body.classList.remove('isCartOpened');
+    }
+    return () => {
+      document.body.classList.remove('isCartOpened');
+    };
+  }, [cartOpened]);
+  //переменные для Контекста
   const value = {
     items,
     cartItems,
@@ -116,6 +132,8 @@ function App() {
     onAddRemToFavorite,
     setCartOpened,
     setCartItems,
+    page,
+    setPage,
   };
   return (
     <AppContext.Provider value={value}>
@@ -125,8 +143,9 @@ function App() {
           onClose={() => setCartOpened(false)}
           onRemove={onRemoveItem}
           opened={cartOpened}
+          setCartOpened={setCartOpened}
         />
-        <Header onClickCart={() => setCartOpened(true)} />
+        <Header onClickCart={onOpenCart} />
         <Routes>
           <Route
             path="/"
@@ -144,6 +163,8 @@ function App() {
               />
             }
           />
+          <Route path="/product/:id" element={<ItemInfo />} />
+
           <Route path="/favorites" element={<Favorites />} />
           <Route path="/orders" element={<Orders />} />
         </Routes>

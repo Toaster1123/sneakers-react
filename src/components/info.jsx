@@ -13,7 +13,7 @@ export const Info = ({ img, title, description }) => {
           setCartOpened(false);
         }}
         className="greenButton">
-        <img src="/pic/arrow.svg" />
+        <img src="pic/arrow.svg" />
         Вернуться назад
       </button>
     </div>

@@ -39,7 +39,7 @@ function Drawer({ onRemove, onClose, opened, items = [], setCartOpened }) {
     <div className={`${styles.overlay} ${opened ? styles.overlayVisible : ``}`}>
       <div ref={ref} className={styles.drawer}>
         <h2>
-          Корзина <img src="pic/btn-remove.svg" onClick={onClose} />
+          Корзина <img src="/pic/btn-remove.svg" onClick={onClose} />
         </h2>
         {items.length > 0 ? (
           <div className={styles.drawerItems}>
@@ -53,7 +53,7 @@ function Drawer({ onRemove, onClose, opened, items = [], setCartOpened }) {
                     <p>{obj.title}</p>
                     <b>{obj.price}</b>
                   </div>
-                  <img onClick={() => onRemove(obj.id)} src="pic/btn-remove.svg" />
+                  <img onClick={() => onRemove(obj.id)} src="/pic/btn-remove.svg" />
                 </div>
               ))}
             </div>
@@ -71,7 +71,7 @@ function Drawer({ onRemove, onClose, opened, items = [], setCartOpened }) {
                 </li>
               </ul>
               <button disabled={isLoading} onClick={onClickOrder} className="greenButton">
-                Оформить заказ <img src="pic/arrow.svg" />
+                Оформить заказ <img src="/pic/arrow.svg" />
               </button>
             </div>
           </div>

@@ -1,8 +1,14 @@
 import React from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import style from '../components/cardProduct/cardProduct.module.scss';
 
 export const ItemInfo = (products) => {
+  const [isSizeOpen, setIsSizeOpen] = React.useState(false);
+  const onChangeSizeOpen = () => {
+    setIsSizeOpen(!isSizeOpen);
+  };
+  console.log(isSizeOpen);
   const { id } = useParams();
   const [itemData, setItemData] = React.useState({});
   React.useEffect(() => {
@@ -15,28 +21,35 @@ export const ItemInfo = (products) => {
 
   console.log(itemData);
   return (
-    <div className="product">
-      <div className="productMainPicture">
+    <div className={style.product}>
+      <div className={style.productMainPicture}>
         <img src={itemData.imageUrl} />
       </div>
-      <div className="productDesc">
-        <div className="titleAndPrice">
-          <div>Title</div>
-          <div className="PriceProduct">price</div>
+      <div className={style.productDesc}>
+        <div>
+          <div className={style.TitleProduct}>{itemData.title}</div>
+          <div className={style.PriceProduct}>{itemData.price} руб.</div>
         </div>
-        <div className="chooseSizeProduct">
-          <p>Размер</p>
-          стрелка вниз
-          <img src="" />
-          {[...Array(10)].map(() => {
-            return <li>1</li>;
-          })}
+        <div>
+          <div
+            className={style.chooseSizeProductMain}
+            onClick={() => {
+              onChangeSizeOpen();
+            }}>
+            <p>Размер</p>
+          </div>
+          <div className={style.sizes}>
+            {[...Array(10)].map((_, i) => {
+              return <li>{i + 36}</li>;
+            })}
+          </div>
         </div>
-        <div className="descriptionMain">
+        <div className={style.descriptionMain}>
           <div>Описание</div>
           <div>Изготовление</div>
           {itemData.description}
         </div>
+        <button className={style.buttonAddToCart}>В корзину</button>
       </div>
     </div>
   );

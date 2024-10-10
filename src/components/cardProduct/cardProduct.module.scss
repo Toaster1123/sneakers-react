@@ -1,0 +1,47 @@
+.product {
+  display: flex;
+  margin: 60px 100px;
+  .productMainPicture {
+    margin-right: 40px;
+  }
+  .productDesc {
+    .TitleProduct {
+      font-size: 32px;
+      font-weight: 500;
+      margin-bottom: 12px;
+    }
+    .PriceProduct {
+      font-size: 19px;
+      margin-bottom: 28px;
+    }
+    .chooseSizeProductMain {
+      user-select: none;
+      background-color: rgb(231, 231, 231);
+      height: 44px;
+      width: 90px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2;
+
+      p {
+        font-size: 18px;
+        font-weight: 500;
+        margin-right: 10px;
+      }
+    }
+    .sizesActiveImg {
+      transform: rotate(180deg);
+      transition: 0.25s;
+    }
+    .sizes {
+      display: flex;
+      flex-direction: row;
+      list-style: none;
+      cursor: pointer;
+      background-color: gray;
+      font-size: 19px;
+      transition: 0.3s ease-out;
+    }
+  }
+}

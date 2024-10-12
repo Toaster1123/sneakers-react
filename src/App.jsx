@@ -1,11 +1,13 @@
 import React from 'react';
 import axios from 'axios';
 import { Routes, Route } from 'react-router-dom';
+
 import Header from './components/Header';
 import Drawer from './components/drawer';
+import { AppContext } from './context';
+
 import Home from './pages/Home';
 import Favorites from './pages/Favorites';
-import { AppContext } from './context';
 import Orders from './pages/orders';
 import { ItemInfo } from './pages/itemInfo';
 
@@ -41,11 +43,14 @@ function App() {
 
   //Добавление и удаление товара из корзины при нажатии на плюс
   const onAddToCart = async (obj) => {
+    console.log('obj.id', obj.id);
     try {
       if (cartItems.find((isExist) => Number(isExist.item_id) === Number(obj.id))) {
         cartItems.forEach((item) => {
           if (Number(item.item_id) === Number(obj.id)) {
             const id = item.id;
+            console.log('delete');
+
             axios.delete(`https://6ca41a0c78299893.mokky.dev/cart/${id}`);
             setCartItems((prev) => prev.filter((item) => Number(item.item_id) !== Number(obj.id)));
           }
@@ -53,6 +58,7 @@ function App() {
       } else {
         obj.item_id = obj.id;
         delete obj.id;
+        console.log('add');
         const res = await axios.post('https://6ca41a0c78299893.mokky.dev/cart', obj);
         setCartItems((prev) => [...prev, res.data]);
       }
@@ -60,6 +66,7 @@ function App() {
       alert('');
     }
   };
+  console.log(cartItems);
   //добавить и удалить из избранного
   const onAddToFavorite = async (obj) => {
     try {
@@ -134,6 +141,7 @@ function App() {
     setCartItems,
     page,
     setPage,
+    onAddToCart,
   };
   return (
     <AppContext.Provider value={value}>
@@ -158,7 +166,6 @@ function App() {
                 setSearchValue={setSearchValue} //пропсы
                 onChangeSearchinput={onChangeSearchinput} //пропсы
                 onAddToFavorite={onAddToFavorite} //пропсы
-                onAddToCart={onAddToCart} //пропсы
                 isLoading={isLoading}
               />
             }

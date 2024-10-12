@@ -1,8 +1,10 @@
 import React from 'react';
 import ContentLoader from 'react-content-loader';
-import styles from './Card.module.scss';
-import { AppContext } from '../../context';
 import { Link } from 'react-router-dom';
+
+import styles from './Card.module.scss';
+
+import { AppContext } from '../../context';
 
 function Card({
   onFavorite,

@@ -8,10 +8,10 @@ function Home({
   setSearchValue,
   onChangeSearchinput,
   onAddToFavorite,
-  onAddToCart,
+
   isLoading,
 }) {
-  const { page, setPage } = React.useContext(AppContext);
+  const { page, setPage, onAddToCart } = React.useContext(AppContext);
   const renderItems = () => {
     const filtredItems = items.filter((obj) =>
       obj.title.toLowerCase().includes(searchValue.toLowerCase()),

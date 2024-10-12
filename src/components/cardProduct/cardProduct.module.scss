@@ -5,6 +5,7 @@
     margin-right: 40px;
   }
   .productDesc {
+    margin-bottom: 40px;
     .TitleProduct {
       font-size: 32px;
       font-weight: 500;
@@ -15,33 +16,98 @@
       margin-bottom: 28px;
     }
     .chooseSizeProductMain {
-      user-select: none;
       background-color: rgb(231, 231, 231);
-      height: 44px;
-      width: 90px;
+      height: 42px;
+      width: 93px;
       display: flex;
       justify-content: center;
       align-items: center;
-      z-index: 2;
-
-      p {
-        font-size: 18px;
-        font-weight: 500;
-        margin-right: 10px;
-      }
-    }
-    .sizesActiveImg {
-      transform: rotate(180deg);
-      transition: 0.25s;
+      font-size: 18px;
+      font-weight: 600;
     }
     .sizes {
       display: flex;
       flex-direction: row;
       list-style: none;
-      cursor: pointer;
-      background-color: gray;
       font-size: 19px;
-      transition: 0.3s ease-out;
+      li {
+        user-select: none;
+        font-size: 17px;
+        margin-top: 15px;
+        transition: 0.22s ease-in-out;
+        background-color: #e6e6e6;
+        cursor: pointer;
+        margin-right: 7px;
+        padding: 3px 8px;
+        &.active {
+          background-color: rgb(80, 80, 80);
+          color: white;
+        }
+      }
+    }
+    .descriptionMain {
+      width: 560px;
+      font-size: 18px;
+
+      .descriptionContent {
+        height: 144px;
+        transition: 0.3s;
+        display: flex;
+        overflow: hidden;
+        position: absolute;
+        width: 560px;
+
+        .descriptionContentText {
+          flex: none;
+          width: 560px;
+          transition: all 0.3s ease-in-out;
+
+          &.cho {
+            transform: translateX(-560px);
+          }
+        }
+      }
+      .rowChars {
+        display: flex;
+        .typeChars {
+          width: 300px;
+        }
+      }
+
+      .descriptionMainChoose {
+        margin: 32px 0;
+        width: 380px;
+        display: flex;
+        font-weight: 500;
+        font-size: 25px;
+        color: rgb(53, 53, 53);
+        justify-content: space-between;
+        border-bottom: 2px solid #e1e1e1;
+        div {
+          transition: 0.23s;
+          position: relative;
+          border-bottom: 2px solid #e1e1e1;
+
+          top: 2px;
+          cursor: pointer;
+          user-select: none;
+          &.select {
+            border-bottom: 2px solid;
+          }
+        }
+      }
+    }
+    .buttonAddToCart {
+      margin-top: 154px;
+      background: #8ec150;
+      border: none;
+      font-size: 20px;
+      color: white;
+      padding: 9px 19px;
+      cursor: pointer;
+      &.added {
+        background: #e1e1e1;
+      }
     }
   }
 }

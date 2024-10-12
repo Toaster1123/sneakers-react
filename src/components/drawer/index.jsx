@@ -77,7 +77,7 @@ function Drawer({ onRemove, onClose, opened, items = [], setCartOpened }) {
           </div>
         ) : (
           <Info
-            img={isOrderCompleted ? 'pic/complete-order.jpg' : 'pic/empty-cart.jpg'}
+            img={isOrderCompleted ? '/pic/complete-order.jpg' : '/pic/empty-cart.jpg'}
             title={isOrderCompleted ? 'Заказ оформлен' : 'Корзина пустая'}
             description={
               isOrderCompleted

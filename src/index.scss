@@ -140,6 +140,7 @@ header {
   margin-bottom: 20px;
   .cartDesc {
     width: 264px;
+    user-select: text;
   }
   .cartItemImg {
     height: 70px;
@@ -190,6 +191,7 @@ header {
   }
 }
 .cart-bottom {
+  user-select: text;
   margin-left: -40px;
   margin-bottom: 40px;
   div {

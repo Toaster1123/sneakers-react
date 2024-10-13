@@ -44,13 +44,11 @@ function App() {
 
   //Добавление и удаление товара из корзины при нажатии на плюс
   const onAddToCart = async (obj) => {
-    console.log('obj', obj);
     try {
       if (cartItems.find((isExist) => Number(isExist.item_id) === Number(obj.id))) {
         cartItems.forEach((item) => {
           if (Number(item.item_id) === Number(obj.id)) {
             const id = item.id;
-            console.log('delete');
             axios.delete(`https://6ca41a0c78299893.mokky.dev/cart/${id}`);
             setCartItems((prev) => prev.filter((item) => Number(item.item_id) !== Number(obj.id)));
           }
@@ -58,9 +56,7 @@ function App() {
       } else {
         obj.item_id = obj.id;
         delete obj.id;
-        console.log('add');
         const res = await axios.post('https://6ca41a0c78299893.mokky.dev/cart', obj);
-        // setItemData(res.data);
         setCartItems((prev) => [...prev, res.data]);
       }
     } catch (error) {
@@ -113,8 +109,6 @@ function App() {
   };
   //проверка при моунте
   const isItemAdded = (id) => {
-    // console.log('id', id);
-    // console.log('cartItems', cartItems);
     return cartItems.some((cartItm) => Number(cartItm.item_id) == Number(id));
   };
   const onOpenCart = () => {
@@ -132,7 +126,6 @@ function App() {
       document.body.classList.remove('isCartOpened');
     };
   }, [cartOpened]);
-  console.log('cartItems', cartItems);
 
   //переменные для Контекста
   const value = {

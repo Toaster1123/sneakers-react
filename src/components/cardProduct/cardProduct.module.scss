@@ -3,6 +3,8 @@
   margin: 60px 100px;
   .productMainPicture {
     margin-right: 40px;
+    height: 224px;
+    width: 266px;
   }
   .productDesc {
     margin-bottom: 40px;
@@ -46,11 +48,10 @@
       }
     }
     .descriptionMain {
-      width: 560px;
       font-size: 18px;
 
       .descriptionContent {
-        height: 144px;
+        height: 168px;
         transition: 0.3s;
         display: flex;
         overflow: hidden;
@@ -98,7 +99,7 @@
       }
     }
     .buttonAddToCart {
-      margin-top: 154px;
+      margin-top: 178px;
       background: #8ec150;
       border: none;
       font-size: 20px;

@@ -61,7 +61,7 @@ export const ItemInfo = () => {
     <div className={style.product}>
       {loading ? (
         <ContentLoader
-          speed={1}
+          speed={1.8}
           width={880}
           height={534}
           viewBox="0 0 880 534"
@@ -74,7 +74,7 @@ export const ItemInfo = () => {
           <rect x="306" y="165" rx="0" ry="0" width="380" height="30" />
           <rect x="306" y="232" rx="0" ry="0" width="380" height="35" />
           <rect x="306" y="298" rx="0" ry="0" width="560" height="120" />
-          <rect x="306" y="448" rx="0" ry="0" width="222" height="45" />
+          <rect x="306" y="472" rx="0" ry="0" width="222" height="45" />
         </ContentLoader>
       ) : (
         <>

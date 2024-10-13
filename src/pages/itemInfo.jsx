@@ -7,12 +7,35 @@ import { AppContext } from '../context';
 import style from '../components/cardProduct/cardProduct.module.scss';
 
 export const ItemInfo = () => {
-  const { isItemAdded, onAddToCart } = React.useContext(AppContext);
-
+  const [itemData, setItemData] = React.useState({});
+  const { isItemAdded, cartItems, setCartItems } = React.useContext(AppContext);
   const [isSizeOpen, setIsSizeOpen] = React.useState(false);
   const [desc, setDesc] = React.useState(0);
-  const [itemData, setItemData] = React.useState({});
   const [chooseSize, setChooseSize] = React.useState(0);
+
+  //  const onAddToCart = async (obj) => {
+  //    try {
+  //      if (cartItems.find((isExist) => Number(isExist.item_id) === Number(obj.id))) {
+  //        cartItems.forEach((item) => {
+  //          if (Number(item.item_id) === Number(obj.id)) {
+  //            const id = item.id;
+  //            console.log('delete');
+  //            axios.delete(`https://6ca41a0c78299893.mokky.dev/cart/${id}`);
+  //            setCartItems((prev) => prev.filter((item) => Number(item.item_id) !== Number(obj.id)));
+  //          }
+  //        });
+  //      } else {
+  //        obj.item_id = obj.id;
+  //        delete obj.id;
+  //        console.log('add');
+  //        const res = await axios.post('https://6ca41a0c78299893.mokky.dev/cart', obj);
+  //        // setItemData(res.data);
+  //        setCartItems((prev) => [...prev, res.data]);
+  //      }
+  //    } catch (error) {
+  //      alert(error);
+  //    }
+  //  };
 
   const onChangeSizeOpen = () => {
     setIsSizeOpen(!isSizeOpen);
@@ -25,13 +48,34 @@ export const ItemInfo = () => {
   React.useEffect(() => {
     const fetchItems = async () => {
       const { data } = await axios.get(`https://6ca41a0c78299893.mokky.dev/Items/${id}`);
+
       setItemData(data);
     };
     fetchItems();
   }, []);
-  console.log(itemData);
-  console.log(isItemAdded(itemData.id));
-  console.log(itemData.id);
+  const addToCartOnPage = async () => {
+    try {
+      if (cartItems.find((isExist) => Number(isExist.item_id) === Number(id))) {
+        cartItems.forEach((item) => {
+          if (Number(item.item_id) === Number(obj.id)) {
+            const id = item.id;
+            console.log('delete');
+            axios.delete(`https://6ca41a0c78299893.mokky.dev/cart/${id}`);
+            setCartItems((prev) => prev.filter((item) => Number(item.item_id) !== Number(obj.id)));
+          }
+        });
+      } else {
+        obj.item_id = obj.id;
+        delete obj.id;
+        console.log('add');
+        const res = await axios.post('https://6ca41a0c78299893.mokky.dev/cart', obj);
+        // setItemData(res.data);
+        setCartItems((prev) => [...prev, res.data]);
+      }
+    } catch (error) {}
+  };
+  // console.log('itemData', itemData);
+  // console.log(isItemAdded(itemData.id));
 
   const renderCharacter = (data) => {
     if (data == undefined) {
@@ -117,10 +161,10 @@ export const ItemInfo = () => {
         </div>
         <button
           onClick={() => {
-            onAddToCart(itemData);
+            addToCartOnPage();
           }}
-          className={`${style.buttonAddToCart} ${isItemAdded(itemData.id) && style.added}`}>
-          {isItemAdded(itemData.id) ? 'Убрать из корзины' : 'Добавить в корзину'}
+          className={`${style.buttonAddToCart} ${isItemAdded(id) && style.added}`}>
+          {isItemAdded(id) ? 'Убрать из корзины' : 'Добавить в корзину'}
         </button>
       </div>
     </div>

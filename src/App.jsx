@@ -13,6 +13,7 @@ import { ItemInfo } from './pages/itemInfo';
 
 function App() {
   const [items, setItems] = React.useState([]);
+
   const [cartItems, setCartItems] = React.useState([]);
   const [favorites, setFavorites] = React.useState([]);
   const [searchValue, setSearchValue] = React.useState('');
@@ -43,14 +44,13 @@ function App() {
 
   //Добавление и удаление товара из корзины при нажатии на плюс
   const onAddToCart = async (obj) => {
-    console.log('obj.id', obj.id);
+    console.log('obj', obj);
     try {
       if (cartItems.find((isExist) => Number(isExist.item_id) === Number(obj.id))) {
         cartItems.forEach((item) => {
           if (Number(item.item_id) === Number(obj.id)) {
             const id = item.id;
             console.log('delete');
-
             axios.delete(`https://6ca41a0c78299893.mokky.dev/cart/${id}`);
             setCartItems((prev) => prev.filter((item) => Number(item.item_id) !== Number(obj.id)));
           }
@@ -60,13 +60,13 @@ function App() {
         delete obj.id;
         console.log('add');
         const res = await axios.post('https://6ca41a0c78299893.mokky.dev/cart', obj);
+        // setItemData(res.data);
         setCartItems((prev) => [...prev, res.data]);
       }
     } catch (error) {
-      alert('');
+      alert(error);
     }
   };
-  console.log(cartItems);
   //добавить и удалить из избранного
   const onAddToFavorite = async (obj) => {
     try {
@@ -113,7 +113,9 @@ function App() {
   };
   //проверка при моунте
   const isItemAdded = (id) => {
-    return cartItems.some((cartItm) => cartItm.item_id === id);
+    // console.log('id', id);
+    // console.log('cartItems', cartItems);
+    return cartItems.some((cartItm) => Number(cartItm.item_id) == Number(id));
   };
   const onOpenCart = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -130,6 +132,8 @@ function App() {
       document.body.classList.remove('isCartOpened');
     };
   }, [cartOpened]);
+  console.log('cartItems', cartItems);
+
   //переменные для Контекста
   const value = {
     items,

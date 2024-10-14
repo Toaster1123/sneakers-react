@@ -25,6 +25,8 @@ function App() {
   React.useEffect(() => {
     async function fetchData() {
       try {
+        setIsLoading(true);
+
         const [cartResponse, favoritesResponse, itemsResponse] = await Promise.all([
           axios.get('https://6ca41a0c78299893.mokky.dev/cart'),
           axios.get('https://6ca41a0c78299893.mokky.dev/Favorite'),
